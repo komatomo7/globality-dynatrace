@@ -600,7 +600,7 @@
                         },
                         "TemplateURL": {
                             "Fn::Sub": [
-                                "https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}templates/dynatrace.template",
+                                "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/default/dynatrace.template",
                                 {
                                     "S3Region": {
                                         "Fn::If": [

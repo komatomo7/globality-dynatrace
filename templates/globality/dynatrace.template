@@ -622,7 +622,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -709,7 +709,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -797,7 +797,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -892,7 +892,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -980,7 +980,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -1068,7 +1068,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
