@@ -469,7 +469,7 @@
                 },
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
+                        "https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-linux-bastion/templates/linux-bastion.template",
                         {
                             "S3Region": {
                                 "Fn::If": [
@@ -600,7 +600,7 @@
                         },
                         "TemplateURL": {
                             "Fn::Sub": [
-                                "https://globality-dynatrace-quickstart.${S3Region}.amazonaws.com/default/dynatrace.template",
+                                "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/default/dynatrace.template",
                                 {
                                     "S3Region": {
                                         "Fn::If": [
