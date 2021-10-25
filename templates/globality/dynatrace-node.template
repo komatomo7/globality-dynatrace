@@ -60,6 +60,14 @@
                     "Parameters": [
                         "KmsKeyId"
                     ]
+                },
+                {
+                    "Label": {
+                        "default": "Globality Configuration"
+                    },
+                    "Parameters": [
+                        "Environment"
+                    ]
                 }
             ],
             "ParameterLabels": {
@@ -86,6 +94,9 @@
                 },
                 "ElasticSearchVolumeSize": {
                     "default": "EBS Volume size - ElasticSearch"
+                },
+                "Environment": {
+                    "default": "Environment"
                 },
                 "KeyPairName": {
                     "default": "Key pair name"
@@ -130,6 +141,10 @@
         },
         "LicenseKey": {
             "Description": "Please see the user guide for information on how to obtain a license key.",
+            "Type": "String"
+        },
+        "Environment": {
+            "Description": "Please enter dev or prod.",
             "Type": "String"
         },
         "DownloadUrl": {
@@ -215,7 +230,7 @@
         },
         "KmsKeyId": {
             "Description": "The ID of KMS Key that is used to encrypt EBS Volume",
-            "Type": "AWS::KMS::Key"
+            "Type": "String"
         },
         "NodeIndex": {
             "Description": "Dynatrace Managed node index",
@@ -447,6 +462,11 @@
                                                 "Ref": "DownloadUrl"
                                             },
                                             "\n",
+                                            "Environment=",
+                                            {
+                                                "Ref": "Environment"
+                                            },
+                                            "\n",
                                             "LicenseKey=",
                                             {
                                                 "Ref": "LicenseKey"
@@ -631,7 +651,11 @@
                             "Fn::Join": [
                                 "",
                                 [
-                                    "DynatraceNode",
+                                    "dynatrace-",
+                                    {
+                                        "Ref": "Environment"
+                                    },
+                                    "-",
                                     {
                                         "Ref": "NodeIndex"
                                     }
@@ -641,7 +665,7 @@
                     },
                     {
                         "Key": "Environment",
-                        "Value": "AWS Quick Start"
+                        "Value": { "Ref": "Environment" }
                     }
                 ],
                 "Tenancy": {

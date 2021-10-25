@@ -69,6 +69,15 @@
                         "QSS3BucketName",
                         "QSS3KeyPrefix"
                     ]
+                },
+                {
+                    "Label": {
+                        "default": "Globality configuration"
+                    },
+                    "Parameters": [
+                        "Environment",
+                        "KmsKeyId"
+                    ]
                 }
             ],
             "ParameterLabels": {
@@ -98,6 +107,12 @@
                 },
                 "ElasticSearchVolumeSize" : {
                     "default": "EBS volume size - ElasticSearch"
+                },
+                "Environment" : {
+                    "default": "Environment"
+                },
+                "KmsKeyId" : {
+                    "default": "KMS Key to encrypt EBS Volume"
                 },
                 "KeyPairName": {
                     "default": "Key pair name"
@@ -194,6 +209,14 @@
             "AllowedValues": ["default", "dedicated"],
             "Default": "default",
             "Description": "Choose whether Dynatrace nodes run on a dedicated or a multi-tenant host.",
+            "Type": "String"
+        },
+        "Environment": {
+            "Description": "Please enter dev or prod",
+            "Type": "String"
+        },
+        "KmsKeyId": {
+            "Description": "Please enter KMS Key ID either 03ed9034-027c-4f89-b795-e1032869a645 (dev) or b8d7cdcc-d657-4f47-bf06-038a01f1e643 (prod)",
             "Type": "String"
         },
         "BinVolumeSize" : {
@@ -506,14 +529,34 @@
         "EIP1" : {
  			"Type" : "AWS::EC2::EIP",
  			"Properties" : {
-                "Domain" : "vpc"
+                "Domain" : "vpc",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value" : "dynatrace-node-eip"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value" : { "Ref": "Environment" }
+                    }
+                ]
  			}
 		},
 
 		"EIP2" : {
 			"Type" : "AWS::EC2::EIP",
 			"Properties" : {
-                "Domain" : "vpc"
+                "Domain" : "vpc",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value" : "dynatrace-node-eip"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value" : { "Ref": "Environment" }
+                    }
+                ]
 			}
 		},
 
@@ -521,7 +564,17 @@
             "Type" : "AWS::EC2::EIP",
             "Condition" : "3AZCondition",
             "Properties" : {
-                "Domain" : "vpc"
+                "Domain" : "vpc",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value" : "dynatrace-node-eip"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value" : { "Ref": "Environment" }
+                    }
+                ]
             }
         },
 
@@ -565,11 +618,11 @@
 				"Tags": [
                     {
                         "Key": "Name",
-                        "Value": "DynatraceNodeSecurityGroup"
+                        "Value": "dynatrace-cluster-default"
                     },
                     {
                         "Key": "Environment",
-                        "Value": "AWS Quick Start"
+                        "Value" : { "Ref": "Environment" }
                     }
                 ]
             }
@@ -622,7 +675,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/globality/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.s3.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -640,6 +693,9 @@
                     },
                     "DownloadUrl" : {
                         "Ref" : "DownloadUrl"
+                    },
+                    "Environment" : {
+                        "Ref" : "Environment"
                     },
                     "AdminEmail" : {
                         "Ref" : "AdminEmail"
@@ -670,6 +726,9 @@
                     },
                     "KeyPairName": {
                         "Ref": "KeyPairName"
+                    },
+                    "KmsKeyId": {
+                        "Ref": "KmsKeyId"
                     },
                     "NodeIndex" : "1",
                     "PrivateSubnetID" : {
@@ -709,7 +768,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/globality/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.s3.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -727,6 +786,9 @@
                     },
                     "DownloadUrl" : {
                         "Ref" : "DownloadUrl"
+                    },
+                    "Environment" : {
+                        "Ref" : "Environment"
                     },
                     "AdminEmail" : {
                         "Ref" : "AdminEmail"
@@ -757,6 +819,9 @@
                     },
                     "KeyPairName": {
                         "Ref": "KeyPairName"
+                    },
+                    "KmsKeyId": {
+                        "Ref": "KmsKeyId"
                     },
                     "NodeIndex" : "2",
                     "PrivateSubnetID" : {
@@ -797,7 +862,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/globality/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.s3.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -815,6 +880,9 @@
                     },
                     "DownloadUrl" : {
                         "Ref" : "DownloadUrl"
+                    },
+                    "Environment" : {
+                        "Ref" : "Environment"
                     },
                     "AdminEmail" : {
                         "Ref" : "AdminEmail"
@@ -845,6 +913,9 @@
                     },
                     "KeyPairName": {
                         "Ref": "KeyPairName"
+                    },
+                    "KmsKeyId": {
+                        "Ref": "KmsKeyId"
                     },
                     "NodeIndex" : "3",
                     "PrivateSubnetID" :
@@ -892,7 +963,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/globality/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.s3.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -910,6 +981,9 @@
                     },
                     "DownloadUrl" : {
                         "Ref" : "DownloadUrl"
+                    },
+                    "Environment" : {
+                        "Ref" : "Environment"
                     },
                     "AdminEmail" : {
                         "Ref" : "AdminEmail"
@@ -940,6 +1014,9 @@
                     },
                     "KeyPairName": {
                         "Ref": "KeyPairName"
+                    },
+                    "KmsKeyId": {
+                        "Ref": "KmsKeyId"
                     },
                     "NodeIndex" : "4",
                     "PrivateSubnetID" : {
@@ -980,7 +1057,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/globality/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.s3.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -998,6 +1075,9 @@
                     },
                     "DownloadUrl" : {
                         "Ref" : "DownloadUrl"
+                    },
+                    "Environment" : {
+                        "Ref" : "Environment"
                     },
                     "AdminEmail" : {
                         "Ref" : "AdminEmail"
@@ -1028,6 +1108,9 @@
                     },
                     "KeyPairName": {
                         "Ref": "KeyPairName"
+                    },
+                    "KmsKeyId": {
+                        "Ref": "KmsKeyId"
                     },
                     "NodeIndex" : "5",
                     "PrivateSubnetID" : {
@@ -1068,7 +1151,7 @@
             "Properties": {
                 "TemplateURL": {
                     "Fn::Sub": [
-                        "https://globality-dynatrace-quickstart.${QSS3Region}.amazonaws.com/globality/dynatrace-node.template",
+                        "https://globality-dynatrace-quickstart.s3.amazonaws.com/globality/dynatrace-node.template",
                         {
                             "QSS3Region": {
                                 "Fn::If": [
@@ -1086,6 +1169,9 @@
                     },
                     "DownloadUrl" : {
                         "Ref" : "DownloadUrl"
+                    },
+                    "Environment" : {
+                        "Ref" : "Environment"
                     },
                     "AdminEmail" : {
                         "Ref" : "AdminEmail"
@@ -1116,6 +1202,9 @@
                     },
                     "KeyPairName": {
                         "Ref": "KeyPairName"
+                    },
+                    "KmsKeyId": {
+                        "Ref": "KmsKeyId"
                     },
                     "NodeIndex" : "6",
                     "PrivateSubnetID" : { "Fn::If" : [
@@ -1186,8 +1275,8 @@
                         "Value" : { "Ref" : "AWS::StackName" }
                     },
                     {
-                        "Key": "Environment",
-                        "Value": "AWS Quick Start"
+                        "Key" : "Environment",
+                        "Value" : { "Ref" : "Environment" }
                     }
                 ],
                 "Type" : "network"
@@ -1235,7 +1324,7 @@
                     },
                     {
                         "Key": "Environment",
-                        "Value": "AWS Quick Start"
+                        "Ref": "Environment"
                     }
                 ],
                 "Targets" : [
@@ -1332,7 +1421,7 @@
                     },
                     {
                         "Key": "Environment",
-                        "Value": "AWS Quick Start"
+                        "Ref": "Environment"
                     }
                 ],
                 "Targets" : [
